@@ -26,8 +26,7 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
-import org.wso2.carbon.extension.identity.verification.provider.IdVProviderManager;
-import org.wso2.carbon.extension.identity.verification.provider.IdentityVerificationProviderManager;
+import org.wso2.carbon.extension.identity.verification.provider.IdentityVerifierFactory;
 import org.wso2.carbon.user.core.service.RealmService;
 
 /**
@@ -73,5 +72,22 @@ public class IdVProviderMgtServiceComponent {
     protected void unsetRealmService(RealmService realmService) {
 
         IdVProviderMgtDataHolder.setRealmService(null);
+    }
+
+    @Reference(
+            name = "hash.provider.component",
+            service = org.wso2.carbon.extension.identity.verification.provider.IdentityVerifierFactory.class,
+            cardinality = ReferenceCardinality.MULTIPLE,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "unsetHashProviderFactory"
+    )
+    protected void setHashProviderFactory(IdentityVerifierFactory identityVerifierFactory) {
+
+        IdVProviderMgtDataHolder.setIdentityVerifierFactory(identityVerifierFactory);
+    }
+
+    protected void unsetIdentityVerifierFactory(IdentityVerifierFactory identityVerifierFactory) {
+
+        IdVProviderMgtDataHolder.unbindIdentityVerifierFactory(identityVerifierFactory);
     }
 }

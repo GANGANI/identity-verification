@@ -50,7 +50,8 @@ public class IdentityVerifierDataHolder {
     public IdentityVerifierFactory getIdentityVerifierFactory(String identityVerifierName) {
 
         if (identityVerifierFactoryMap == null) {
-            return null;
+            throw new RuntimeException("IdentityVerifierFactory was not set during the " +
+                    "IdentityVerifierServiceComponent startup");
         }
         return identityVerifierFactoryMap.get(identityVerifierName);
     }

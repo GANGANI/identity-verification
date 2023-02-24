@@ -19,7 +19,7 @@
 package org.wso2.carbon.extension.identity.verification.api.rest.common;
 
 import org.wso2.carbon.extension.identity.verification.claim.mgt.IdVClaimManager;
-import  org.wso2.carbon.extension.identity.verification.provider.IdVProviderManager;
+import org.wso2.carbon.extension.identity.verification.provider.IdentityVerificationService;
 import org.wso2.carbon.extension.identity.verifier.IdentityVerifierFactory;
 
 /**
@@ -27,7 +27,7 @@ import org.wso2.carbon.extension.identity.verifier.IdentityVerifierFactory;
  */
 public class IdVProviderServiceHolder {
 
-    private static IdVProviderManager idVProviderManager;
+    private static IdentityVerificationService idVProviderManager;
     private static IdVClaimManager idVClaimManager;
     private static IdentityVerifierFactory identityVerifierFactory;
 
@@ -36,7 +36,7 @@ public class IdVProviderServiceHolder {
      *
      * @return IdVProviderManager
      */
-    public static IdVProviderManager getIdVProviderManager() {
+    public static IdentityVerificationService getIdVProviderManager() {
 
         return idVProviderManager;
     }
@@ -46,7 +46,7 @@ public class IdVProviderServiceHolder {
      *
      * @param idVProviderManager IdVProviderManager.
      */
-    public static void setIdVProviderManager(IdVProviderManager idVProviderManager) {
+    public static void setIdVProviderManager(IdentityVerificationService idVProviderManager) {
 
         IdVProviderServiceHolder.idVProviderManager = idVProviderManager;
     }

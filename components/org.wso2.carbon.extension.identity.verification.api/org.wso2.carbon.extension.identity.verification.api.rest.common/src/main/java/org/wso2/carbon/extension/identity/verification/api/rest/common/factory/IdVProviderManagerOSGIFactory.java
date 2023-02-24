@@ -20,7 +20,6 @@ package org.wso2.carbon.extension.identity.verification.api.rest.common.factory;
 
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
-import org.wso2.carbon.extension.identity.verification.provider.IdVProviderManager;
 
 /**
  * Factory Beans serves as a factory for creating other beans within the IOC container. This factory bean is used to

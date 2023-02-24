@@ -1,33 +1,25 @@
-/*
- * Copyright (c) 2023, WSO2 LLC. (http://www.wso2.com).
- *
- * WSO2 LLC. licenses this file to you under the Apache License,
- * Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License.
- * You may obtain a copy of the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing,
- * software distributed under the License is distributed on an
- * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
- * KIND, either express or implied.  See the License for the
- * specific language governing permissions and limitations
- * under the License.
- */
-package org.wso2.carbon.extension.identity.verification.provider;
+package org.wso2.carbon.extension.identity.verification.provider.internal.service.impl;
 
+import org.wso2.carbon.extension.identity.verification.provider.IdVProviderMgtException;
+import org.wso2.carbon.extension.identity.verification.provider.IdentityVerificationService;
+import org.wso2.carbon.extension.identity.verification.provider.IdentityVerifierFactory;
 import org.wso2.carbon.extension.identity.verification.provider.dao.IdVProviderManagementDAO;
+import org.wso2.carbon.extension.identity.verification.provider.internal.IdVProviderMgtDataHolder;
 import org.wso2.carbon.extension.identity.verification.provider.model.IdentityVerificationProvider;
+import org.wso2.carbon.extension.identity.verification.provider.model.IdentityVerifierResponse;
 
 import java.util.List;
 
-/**
- * This class contains the implementation for the IdVProviderManager.
- */
-public class IdentityVerificationProviderManager implements IdVProviderManager {
+public class IdentityVerificationServiceImpl implements IdentityVerificationService {
 
     IdVProviderManagementDAO idVProviderManagementDAO = new IdVProviderManagementDAO();
+
+    @Override
+    public IdentityVerifierResponse verifyIdentity(String userId, String identityVerifierName) throws IdVProviderMgtException {
+
+        IdentityVerifierFactory factory = IdVProviderMgtDataHolder.getIdentityVerifierFactory(identityVerifierName);
+        return factory.getIdentityVerifier(identityVerifierName).verifyIdentity(userId, identityVerifierName);
+    }
 
     public IdentityVerificationProvider addIdVProvider(IdentityVerificationProvider identityVerificationProvider,
                                                        int tenantId) throws IdVProviderMgtException {
