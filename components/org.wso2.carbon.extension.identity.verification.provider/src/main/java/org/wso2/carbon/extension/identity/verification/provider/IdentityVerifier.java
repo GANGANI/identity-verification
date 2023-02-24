@@ -17,19 +17,13 @@
  */
 package org.wso2.carbon.extension.identity.verification.provider;
 
-import org.wso2.carbon.identity.base.IdentityException;
+import org.wso2.carbon.extension.identity.verification.provider.model.IdentityVerifierResponse;
 
 /**
- * This class contains the implementation of IdVProviderMgtException.
+ * This interface contains the implementation of IdentityVerifier.
  */
-public class IdVProviderMgtException extends IdentityException {
+public interface IdentityVerifier {
 
-
-    public IdVProviderMgtException(String errorCode, String message) {
-        super(errorCode, message);
-    }
-
-    public IdVProviderMgtException(String errorCode, String message, Throwable cause) {
-        super(errorCode, message, cause);
-    }
+    IdentityVerifierResponse verifyIdentity(String userId, String identityVerifierName)
+            throws IdVProviderMgtException;
 }

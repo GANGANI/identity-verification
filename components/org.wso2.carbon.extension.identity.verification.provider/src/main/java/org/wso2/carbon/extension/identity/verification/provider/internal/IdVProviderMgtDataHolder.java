@@ -17,7 +17,11 @@
  */
 package org.wso2.carbon.extension.identity.verification.provider.internal;
 
+import org.wso2.carbon.extension.identity.verification.provider.IdentityVerifierFactory;
 import org.wso2.carbon.user.core.service.RealmService;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Service holder class for IdV Provider Mgt.
@@ -25,6 +29,7 @@ import org.wso2.carbon.user.core.service.RealmService;
 public class IdVProviderMgtDataHolder {
 
     private static RealmService realmService;
+    private static Map<String, IdentityVerifierFactory> identityVerifierFactoryMap;
 
     /**
      * Get the RealmService.
@@ -48,5 +53,27 @@ public class IdVProviderMgtDataHolder {
     public static void setRealmService(RealmService realmService) {
 
         IdVProviderMgtDataHolder.realmService = realmService;
+    }
+
+    public static void setIdentityVerifierFactory(IdentityVerifierFactory identityVerifierFactory) {
+
+        if (identityVerifierFactoryMap == null) {
+            identityVerifierFactoryMap = new HashMap<>();
+        }
+        identityVerifierFactoryMap.put(identityVerifierFactory.getIdentityVerifierName(), identityVerifierFactory);
+    }
+
+    public static IdentityVerifierFactory getIdentityVerifierFactory(String identityVerifierName) {
+
+        if (identityVerifierFactoryMap == null) {
+            throw new RuntimeException("IdentityVerifierFactory was not set during the " +
+                    "IdentityVerifierServiceComponent startup");
+        }
+        return identityVerifierFactoryMap.get(identityVerifierName);
+    }
+
+    public static void unbindIdentityVerifierFactory(IdentityVerifierFactory identityVerifierFactory) {
+
+        identityVerifierFactoryMap.remove(identityVerifierFactory.getIdentityVerifierName());
     }
 }
