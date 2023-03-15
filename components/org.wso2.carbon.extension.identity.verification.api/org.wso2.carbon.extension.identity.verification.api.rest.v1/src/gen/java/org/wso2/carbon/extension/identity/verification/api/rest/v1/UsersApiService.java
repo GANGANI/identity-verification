@@ -29,12 +29,13 @@ import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.Verific
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationClaimUpdateRequest;
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationGetResponse;
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationPostResponse;
+import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerifyRequest;
 import javax.ws.rs.core.Response;
 
 
 public interface UsersApiService {
 
-      public Response addIdVClaim(String userId, List<VerificationClaimResponse> verificationClaimResponse);
+      public Response addIdVClaim(String userId, List<VerificationClaimRequest> verificationClaimRequest);
 
       public Response getIdVClaim(String userId, String claimId);
 
@@ -42,5 +43,5 @@ public interface UsersApiService {
 
       public Response updateIdVClaim(String claimId, String userId, VerificationClaimUpdateRequest verificationClaimUpdateRequest);
 
-      public Response verifyIdentity(String userId, VerificationClaimRequest verificationClaimRequest);
+      public Response verifyIdentity(String userId, VerifyRequest verifyRequest);
 }

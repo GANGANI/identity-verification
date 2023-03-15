@@ -47,7 +47,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/verificationClaimRequest'
+              $ref: '#/components/schemas/verifyRequest'
         required: true
       responses:
         '201':
@@ -149,7 +149,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/verificationClaimResponse'
+                  $ref: '#/components/schemas/verificationClaimPostResponse'
         '400':
           description: Bad Request
           content:
@@ -646,6 +646,22 @@ components:
           type: object
           additionalProperties: true
           example: '{"source": "evidentID", "trackingId": "123e4567-e89b-12d3-a456-556642440000" }'
+    verificationClaimRequest:
+      type: object
+      properties:
+        uri:
+          type: string
+          example: 'http://wso2.org/claims/country'
+        isVerified:
+          type: boolean
+          example: true
+        idvpId:
+          type: string
+          example: '2159375-r567-8524-a456-5566424414527'
+        claimMetadata:
+          type: object
+          additionalProperties: true
+          example: '{"source": "evidentID", "trackingId": "123e4567-e89b-12d3-a456-556642440000" }'
     verificationClaimUpdateRequest:
       type: object
       properties:
@@ -662,8 +678,12 @@ components:
     verificationClaimPostRequest:
       type: array
       items:
+        $ref: '#/components/schemas/verificationClaimRequest'
+    verificationClaimPostResponse:
+      type: array
+      items:
         $ref: '#/components/schemas/verificationClaimResponse'
-    verificationClaimRequest:
+    verifyRequest:
       type: object
       properties:
         identityVerificationProvider:

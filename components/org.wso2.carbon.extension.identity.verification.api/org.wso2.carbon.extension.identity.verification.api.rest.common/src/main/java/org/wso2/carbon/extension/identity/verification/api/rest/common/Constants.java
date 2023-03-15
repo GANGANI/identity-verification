@@ -23,6 +23,7 @@ package org.wso2.carbon.extension.identity.verification.api.rest.common;
  */
 public class Constants {
 
+    public static final String TENANT_NAME_FROM_CONTEXT = "TenantNameFromContext";
     public static final String AUTH_USER_TENANT_DOMAIN = "authUserTenantDomain";
     public static final String CORRELATION_ID_MDC = "Correlation-ID";
     // todo
