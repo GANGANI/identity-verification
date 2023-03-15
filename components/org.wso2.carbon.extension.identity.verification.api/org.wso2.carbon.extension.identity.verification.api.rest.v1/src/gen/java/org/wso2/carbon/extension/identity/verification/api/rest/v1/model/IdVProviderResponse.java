@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.ConfigProperty;
-import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.Verificationclaim;
+import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationClaim;
 import javax.validation.constraints.*;
 
 
@@ -38,7 +38,7 @@ public class IdVProviderResponse  {
     private String name;
     private String description;
     private Boolean isEnabled;
-    private List<Verificationclaim> claims = null;
+    private List<VerificationClaim> claims = null;
 
     private List<ConfigProperty> configProperties = null;
 
@@ -117,7 +117,7 @@ public class IdVProviderResponse  {
 
     /**
     **/
-    public IdVProviderResponse claims(List<Verificationclaim> claims) {
+    public IdVProviderResponse claims(List<VerificationClaim> claims) {
 
         this.claims = claims;
         return this;
@@ -126,14 +126,14 @@ public class IdVProviderResponse  {
     @ApiModelProperty(value = "")
     @JsonProperty("claims")
     @Valid
-    public List<Verificationclaim> getClaims() {
+    public List<VerificationClaim> getClaims() {
         return claims;
     }
-    public void setClaims(List<Verificationclaim> claims) {
+    public void setClaims(List<VerificationClaim> claims) {
         this.claims = claims;
     }
 
-    public IdVProviderResponse addClaimsItem(Verificationclaim claimsItem) {
+    public IdVProviderResponse addClaimsItem(VerificationClaim claimsItem) {
         if (this.claims == null) {
             this.claims = new ArrayList<>();
         }

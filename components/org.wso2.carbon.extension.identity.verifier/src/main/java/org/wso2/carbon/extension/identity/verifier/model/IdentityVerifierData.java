@@ -27,20 +27,9 @@ import java.util.List;
  */
 public class IdentityVerifierData {
 
-    String userId;
     String identityVerifierName;
     List<IdVClaim> idVClaims;
     List<IdVProperty> idVProperties;
-
-    public String getUserId() {
-
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-
-        this.userId = userId;
-    }
 
     public String getIdentityVerifierName() {
 

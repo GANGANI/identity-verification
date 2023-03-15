@@ -23,13 +23,13 @@ import java.io.InputStream;
 import java.util.List;
 
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.Error;
-import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationClaimPostRequest;
+import java.util.List;
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationClaimRequest;
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationClaimResponse;
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationClaimUpdateRequest;
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationGetResponse;
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationPostResponse;
-import org.wso2.carbon.extension.identity.verification.api.rest.v1.IdentityVerificationApiService;
+import org.wso2.carbon.extension.identity.verification.api.rest.v1.UsersApiService;
 
 import javax.validation.Valid;
 import javax.ws.rs.*;
@@ -38,13 +38,13 @@ import io.swagger.annotations.*;
 
 import javax.validation.constraints.*;
 
-@Path("/")
-@Api(description = "The  API")
+@Path("/users")
+@Api(description = "The users API")
 
-public class IdentityVerificationApi  {
+public class UsersApi  {
 
     @Autowired
-    private IdentityVerificationApiService delegate;
+    private UsersApiService delegate;
 
     @Valid
     @POST
@@ -65,9 +65,9 @@ public class IdentityVerificationApi  {
         @ApiResponse(code = 409, message = "Conflict", response = Error.class),
         @ApiResponse(code = 500, message = "Server Error", response = Error.class)
     })
-    public Response addIdVClaim(@ApiParam(value = "user id of the user",required=true) @PathParam("user-id") String userId, @ApiParam(value = "This represents the identity provider to be created." ,required=true) @Valid VerificationClaimPostRequest verificationClaimPostRequest) {
+    public Response addIdVClaim(@ApiParam(value = "user id of the user",required=true) @PathParam("user-id") String userId, @ApiParam(value = "This represents the identity provider to be created." ,required=true) @Valid List<VerificationClaimResponse> verificationClaimResponse) {
 
-        return delegate.addIdVClaim(userId,  verificationClaimPostRequest );
+        return delegate.addIdVClaim(userId,  verificationClaimResponse );
     }
 
     @Valid
@@ -113,9 +113,9 @@ public class IdentityVerificationApi  {
         @ApiResponse(code = 404, message = "Not Found", response = Error.class),
         @ApiResponse(code = 500, message = "Server Error", response = Error.class)
     })
-    public Response getIdVClaims(@ApiParam(value = "user id of the user",required=true) @PathParam("user-id") String userId) {
+    public Response getIdVClaims(@ApiParam(value = "user id of the user",required=true) @PathParam("user-id") String userId,     @Valid@ApiParam(value = "Id of the identity verification provider. ")  @QueryParam("idvp-id") String idvpId) {
 
-        return delegate.getIdVClaims(userId );
+        return delegate.getIdVClaims(userId,  idvpId );
     }
 
     @Valid
@@ -144,7 +144,7 @@ public class IdentityVerificationApi  {
 
     @Valid
     @POST
-    
+    @Path("/{user-id}/verify")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
     @ApiOperation(value = "Verify an Identity", notes = "This API provides the capability to verify a user with the configured verification required attributes", response = VerificationPostResponse.class, responseContainer = "List", authorizations = {
@@ -161,9 +161,9 @@ public class IdentityVerificationApi  {
         @ApiResponse(code = 403, message = "Forbidden", response = Void.class),
         @ApiResponse(code = 500, message = "Server Error", response = Error.class)
     })
-    public Response verifyIdentity(@ApiParam(value = "Verify an identity" ,required=true) @Valid VerificationClaimRequest verificationClaimRequest) {
+    public Response verifyIdentity(@ApiParam(value = "user id of the user",required=true) @PathParam("user-id") String userId, @ApiParam(value = "Verify an identity" ,required=true) @Valid VerificationClaimRequest verificationClaimRequest) {
 
-        return delegate.verifyIdentity(verificationClaimRequest );
+        return delegate.verifyIdentity(userId,  verificationClaimRequest );
     }
 
 }

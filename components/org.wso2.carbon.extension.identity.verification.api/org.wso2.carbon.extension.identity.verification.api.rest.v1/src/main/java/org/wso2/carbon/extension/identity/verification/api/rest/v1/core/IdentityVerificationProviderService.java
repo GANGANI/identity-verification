@@ -25,7 +25,7 @@ import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.ConfigP
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.IdVProviderListResponse;
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.IdVProviderRequest;
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.IdVProviderResponse;
-import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.Verificationclaim;
+import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationClaim;
 import org.wso2.carbon.extension.identity.verification.provider.IdVProviderMgtException;
 import org.wso2.carbon.extension.identity.verification.provider.model.IdVConfigProperty;
 import org.wso2.carbon.extension.identity.verification.provider.model.IdentityVerificationProvider;
@@ -177,14 +177,14 @@ public class IdentityVerificationProviderService {
         }
     }
 
-    private List<Verificationclaim> getIdVClaimMappings(IdentityVerificationProvider identityVerificationProvider) {
+    private List<VerificationClaim> getIdVClaimMappings(IdentityVerificationProvider identityVerificationProvider) {
 
         Map<String, String> claimMappings = identityVerificationProvider.getClaimMappings();
         if (claimMappings == null) {
             return null;
         }
         return claimMappings.entrySet().stream().map(entry -> {
-            Verificationclaim verificationclaim = new Verificationclaim();
+            VerificationClaim verificationclaim = new VerificationClaim();
             verificationclaim.setLocalClaim(entry.getKey());
             verificationclaim.setIdvpClaim(entry.getValue());
             return verificationclaim;
@@ -257,10 +257,10 @@ public class IdentityVerificationProviderService {
         return configProperty;
     };
 
-    private Map<String, String> getClaimMap(List<Verificationclaim> verificationclaimList) {
+    private Map<String, String> getClaimMap(List<VerificationClaim> verificationclaimList) {
 
         Map<String, String> claimMap = new HashMap<>();
-        for (Verificationclaim verificationclaim : verificationclaimList) {
+        for (VerificationClaim verificationclaim : verificationclaimList) {
             claimMap.put(verificationclaim.getLocalClaim(), verificationclaim.getIdvpClaim());
         }
         return claimMap;

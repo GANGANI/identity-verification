@@ -28,14 +28,14 @@ import java.util.Objects;
 import javax.validation.Valid;
 import javax.xml.bind.annotation.*;
 
-public class Verificationclaim  {
+public class VerificationClaim  {
   
     private String localClaim;
     private String idvpClaim;
 
     /**
     **/
-    public Verificationclaim localClaim(String localClaim) {
+    public VerificationClaim localClaim(String localClaim) {
 
         this.localClaim = localClaim;
         return this;
@@ -53,7 +53,7 @@ public class Verificationclaim  {
 
     /**
     **/
-    public Verificationclaim idvpClaim(String idvpClaim) {
+    public VerificationClaim idvpClaim(String idvpClaim) {
 
         this.idvpClaim = idvpClaim;
         return this;
@@ -80,9 +80,9 @@ public class Verificationclaim  {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Verificationclaim verificationclaim = (Verificationclaim) o;
-        return Objects.equals(this.localClaim, verificationclaim.localClaim) &&
-            Objects.equals(this.idvpClaim, verificationclaim.idvpClaim);
+        VerificationClaim verificationClaim = (VerificationClaim) o;
+        return Objects.equals(this.localClaim, verificationClaim.localClaim) &&
+            Objects.equals(this.idvpClaim, verificationClaim.idvpClaim);
     }
 
     @Override
@@ -94,7 +94,7 @@ public class Verificationclaim  {
     public String toString() {
 
         StringBuilder sb = new StringBuilder();
-        sb.append("class Verificationclaim {\n");
+        sb.append("class VerificationClaim {\n");
         
         sb.append("    localClaim: ").append(toIndentedString(localClaim)).append("\n");
         sb.append("    idvpClaim: ").append(toIndentedString(idvpClaim)).append("\n");

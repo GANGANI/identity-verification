@@ -65,7 +65,7 @@ public class VerificationClaimUpdateRequest  {
         return this;
     }
     
-    @ApiModelProperty(example = "{\"source\": \"evidentID\", \"verifiedAt\": \"2020-10-10T12:00:00.000Z\", \"trackingId\": \"123e4567-e89b-12d3-a456-556642440000\" }", required = true, value = "")
+    @ApiModelProperty(example = "{\"source\": \"evidentID\", \"trackingId\": \"123e4567-e89b-12d3-a456-556642440000\" }", required = true, value = "")
     @JsonProperty("claimMetadata")
     @Valid
     @NotNull(message = "Property claimMetadata cannot be null.")

@@ -23,21 +23,17 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.wso2.carbon.extension.identity.verification.claim.mgt.IdVClaimMgtException;
 import org.wso2.carbon.extension.identity.verification.claim.mgt.IdvClaimMgtServerException;
-import org.wso2.carbon.extension.identity.verification.claim.mgt.internal.IdVClaimMgtDataHolder;
 import org.wso2.carbon.extension.identity.verification.claim.mgt.model.IdVClaim;
 import org.wso2.carbon.extension.identity.verification.claim.mgt.util.IdVClaimMgtConstants;
 import org.wso2.carbon.extension.identity.verification.claim.mgt.util.IdVClaimMgtExceptionManagement;
 import org.wso2.carbon.extension.identity.verifier.IdentityVerifier;
 import org.wso2.carbon.extension.identity.verifier.model.IdentityVerifierData;
-import org.wso2.carbon.extension.identity.verifier.onfido.internal.OnfidoIDVDataHolder;
 import org.wso2.carbon.extension.identity.verifier.onfido.web.OnfidoAPIClient;
 import org.wso2.carbon.identity.core.util.IdentityTenantUtil;
 import org.wso2.carbon.user.api.UserStoreException;
 import org.wso2.carbon.user.api.UserStoreManager;
 import org.wso2.carbon.user.core.UniqueIDUserStoreManager;
-import org.wso2.carbon.user.core.common.User;
 import org.wso2.carbon.user.core.service.RealmService;
 
 import java.io.IOException;
@@ -103,7 +99,6 @@ public class OnfidoIdentityVerifier implements IdentityVerifier {
                 for (IdVClaim idVClaim : idVClaims) {
                     idVClaim.setMetadata(jsonObject);
                     idVClaim.setStatus(false);
-                    idVClaim.setUserId(identityVerifierData.getUserId());
                     idVClaim.setIdvProviderId(identityVerifierData.getIdentityVerifierName());
                     //idVClaim = OnfidoIDVDataHolder.getInstance().getIdVClaimManager().
                     //        addIdVClaim(idVClaim, tenantId);

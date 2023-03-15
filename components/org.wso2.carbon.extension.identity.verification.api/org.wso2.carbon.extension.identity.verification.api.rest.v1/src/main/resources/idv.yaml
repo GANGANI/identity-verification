@@ -28,13 +28,20 @@ tags:
   - name: Identity Verification Providers
     description: Identity Verification Provider API
 paths:
-  /:
+  /users/{user-id}/verify:
     post:
       tags:
         - Identity Verification
       summary: Verify an Identity
       description: This API provides the capability to verify a user with the configured verification required attributes
       operationId: verifyIdentity
+      parameters:
+        - name: user-id
+          in: path
+          description: user id of the user
+          required: true
+          schema:
+            type: string
       requestBody:
         description: Verify an identity
         content:
@@ -75,7 +82,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-  /{user-id}/claims:
+  /users/{user-id}/claims:
     get:
       tags:
         - Identity Verification
@@ -89,6 +96,7 @@ paths:
           required: true
           schema:
             type: string
+        - $ref: '#/components/parameters/idVPQueryParam'
       responses:
         '200':
           description: successful operation
@@ -180,7 +188,7 @@ paths:
               $ref: '#/components/schemas/verificationClaimPostRequest'
         description: This represents the identity provider to be created.
         required: true
-  /{user-id}/claims/{claim-id}:
+  /users/{user-id}/claims/{claim-id}:
     get:
       tags:
         - Identity Verification
@@ -571,6 +579,14 @@ components:
       schema:
         type: integer
         format: int32
+    idVPQueryParam:
+      in: query
+      name: idvp-id
+      required: false
+      description: |
+        Id of the identity verification provider.
+      schema:
+        type: string
   schemas:
     Error:
       type: object
@@ -620,16 +636,16 @@ components:
         uri:
           type: string
           example: 'http://wso2.org/claims/country'
-        value:
-          type: string
-          example: 'Sri Lanka'
         isVerified:
           type: boolean
           example: true
+        idvpId:
+          type: string
+          example: '2159375-r567-8524-a456-5566424414527'
         claimMetadata:
           type: object
           additionalProperties: true
-          example: '{"source": "evidentID", "verifiedAt": "2020-10-10T12:00:00.000Z", "trackingId": "123e4567-e89b-12d3-a456-556642440000" }'
+          example: '{"source": "evidentID", "trackingId": "123e4567-e89b-12d3-a456-556642440000" }'
     verificationClaimUpdateRequest:
       type: object
       properties:
@@ -639,37 +655,17 @@ components:
         claimMetadata:
           type: object
           additionalProperties: true
-          example: '{"source": "evidentID", "verifiedAt": "2020-10-10T12:00:00.000Z", "trackingId": "123e4567-e89b-12d3-a456-556642440000" }'
+          example: '{"source": "evidentID", "trackingId": "123e4567-e89b-12d3-a456-556642440000" }'
       required:
         - isVerified
         - claimMetadata
     verificationClaimPostRequest:
-      type: object
-      properties:
-        idvpId:
-          type: string
-          example: '2159375-r567-8524-a456-5566424414527'
-        uri:
-          type: string
-          example: 'http://wso2.org/claims/country'
-        isVerified:
-          type: boolean
-          example: true
-        claimMetadata:
-          type: object
-          additionalProperties: true
-          example: '{"source": "evidentID", "verifiedAt": "2020-10-10T12:00:00.000Z", "trackingId": "123e4567-e89b-12d3-a456-556642440000" }'
-      required:
-        - userId
-        - idvpId
-        - uri
-        - isVerified
+      type: array
+      items:
+        $ref: '#/components/schemas/verificationClaimResponse'
     verificationClaimRequest:
       type: object
       properties:
-        username:
-          type: string
-          example: username
         identityVerificationProvider:
           type: string
           example: evidentID
@@ -725,7 +721,7 @@ components:
         claims:
           type: array
           items:
-            $ref: '#/components/schemas/verificationclaim'
+            $ref: '#/components/schemas/verificationClaim'
         configProperties:
           type: array
           items:
@@ -745,7 +741,7 @@ components:
         claims:
           type: array
           items:
-            $ref: '#/components/schemas/verificationclaim'
+            $ref: '#/components/schemas/verificationClaim'
         configProperties:
           type: array
           items:
@@ -769,7 +765,7 @@ components:
           type: string
         value:
           type: string
-    verificationclaim:
+    verificationClaim:
       type: object
       properties:
         localClaim:

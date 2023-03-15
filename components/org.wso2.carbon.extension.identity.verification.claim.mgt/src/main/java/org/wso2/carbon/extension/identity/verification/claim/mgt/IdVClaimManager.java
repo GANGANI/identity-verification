@@ -19,6 +19,8 @@ package org.wso2.carbon.extension.identity.verification.claim.mgt;
 
 import org.wso2.carbon.extension.identity.verification.claim.mgt.model.IdVClaim;
 
+import java.util.List;
+
 /**
  * This interface contains the methods to manage the IdVClaim.
  */
@@ -53,7 +55,7 @@ public interface IdVClaimManager {
      * @return IdVClaim.
      * @throws IdVClaimMgtException IdVClaimMgtException.
      */
-    IdVClaim addIdVClaim(IdVClaim idvClaim, int tenantId) throws IdVClaimMgtException;
+    List<IdVClaim> addIdVClaims(List<IdVClaim> idvClaim, int tenantId) throws IdVClaimMgtException;
 
     /**
      * Update the IdVClaim.

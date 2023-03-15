@@ -51,28 +51,28 @@ public class IdentityVerificationClaimDAOImpl implements IdentityVerificationCla
     /**
      * Add the identity verification claim.
      *
-     * @param idVClaim IdentityVerificationClaim.
+     * @param idvClaimList IdentityVerificationClaim list.
      * @param tenantId Tenant id.
      * @throws IdVClaimMgtException Identity verification claim management exception.
      */
     @Override
-    public void addIdVClaim(IdVClaim idVClaim, int tenantId) throws IdVClaimMgtException {
+    public void addIdVClaimList(List<IdVClaim> idvClaimList, int tenantId) throws IdVClaimMgtException {
 
         try (Connection connection = IdentityDatabaseUtil.getDBConnection(false)) {
-            try (PreparedStatement addIdVProviderStmt = connection.prepareStatement(IdVClaimMgtConstants.
-                    SQLQueries.ADD_IDV_CLAIM_SQL)) {
-                addIdVProviderStmt.setString(1, idVClaim.getUuid());
-                addIdVProviderStmt.setString(2, idVClaim.getUserId());
-                addIdVProviderStmt.setString(3, idVClaim.getClaimUri());
-                addIdVProviderStmt.setString(4, idVClaim.getIdvProviderId());
-                addIdVProviderStmt.setInt(5, tenantId);
-                addIdVProviderStmt.setBoolean(6, idVClaim.getStatus());
-                addIdVProviderStmt.setBytes(7, getMetadata(idVClaim));
-                addIdVProviderStmt.executeUpdate();
-                IdentityDatabaseUtil.commitTransaction(connection);
-            } catch (SQLException e1) {
-                IdentityDatabaseUtil.rollbackTransaction(connection);
-                throw IdVClaimMgtExceptionManagement.handleServerException(ERROR_ADDING_IDV_CLAIM, e1);
+            for (IdVClaim idVClaim : idvClaimList) {
+                try (PreparedStatement addIdVProviderStmt = connection.prepareStatement(IdVClaimMgtConstants.
+                        SQLQueries.ADD_IDV_CLAIM_SQL)) {
+                    addIdVProviderStmt.setString(1, idVClaim.getUuid());
+                    addIdVProviderStmt.setString(2, idVClaim.getUserId());
+                    addIdVProviderStmt.setString(3, idVClaim.getClaimUri());
+                    addIdVProviderStmt.setString(4, idVClaim.getIdvProviderId());
+                    addIdVProviderStmt.setInt(5, tenantId);
+                    addIdVProviderStmt.setBoolean(6, idVClaim.getStatus());
+                    addIdVProviderStmt.setBytes(7, getMetadata(idVClaim));
+                    addIdVProviderStmt.executeUpdate();
+                } catch (SQLException e1) {
+                    throw IdVClaimMgtExceptionManagement.handleServerException(ERROR_ADDING_IDV_CLAIM, e1);
+                }
             }
         } catch (SQLException e) {
             throw IdVClaimMgtExceptionManagement.handleServerException(ERROR_ADDING_IDV_CLAIM, e);

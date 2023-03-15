@@ -21,6 +21,8 @@ package org.wso2.carbon.extension.identity.verification.claim.mgt.dao;
 import org.wso2.carbon.extension.identity.verification.claim.mgt.IdVClaimMgtException;
 import org.wso2.carbon.extension.identity.verification.claim.mgt.model.IdVClaim;
 
+import java.util.List;
+
 /**
  * This interface of IdentityVerificationClaimDAO.
  */
@@ -29,11 +31,11 @@ public interface IdentityVerificationClaimDAO {
     /**
      * Add the identity verification claim.
      *
-     * @param idVClaim IdentityVerificationClaim.
+     * @param idvClaimList IDV claim list.
      * @param tenantId Tenant id.
      * @throws IdVClaimMgtException Identity verification claim management exception.
      */
-    void addIdVClaim(IdVClaim idVClaim, int tenantId) throws IdVClaimMgtException;
+    void addIdVClaimList(List<IdVClaim> idvClaimList, int tenantId) throws IdVClaimMgtException;
 
     /**
      * Update the identity verification claim by the user id.

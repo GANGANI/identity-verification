@@ -34,6 +34,8 @@ import org.wso2.carbon.user.core.UniqueIDUserStoreManager;
 import org.wso2.carbon.user.core.common.User;
 import org.wso2.carbon.user.core.service.RealmService;
 
+import java.util.List;
+
 /**
  * This class provides methods to manage identity verification claims.
  */
@@ -55,11 +57,13 @@ public class IdVClaimManagerImpl implements IdVClaimManager {
     }
 
     @Override
-    public IdVClaim addIdVClaim(IdVClaim idvClaim, int tenantId) throws IdVClaimMgtException {
+    public List<IdVClaim> addIdVClaims(List<IdVClaim> idVClaims, int tenantId) throws IdVClaimMgtException {
 
-        validateAddIDVClaimInputs(idvClaim, tenantId);
-        identityVerificationClaimDAO.addIdVClaim(idvClaim, tenantId);
-        return idvClaim;
+        for (IdVClaim idVClaim : idVClaims) {
+            validateAddIDVClaimInputs(idVClaim, tenantId);
+        }
+        identityVerificationClaimDAO.addIdVClaimList(idVClaims, tenantId);
+        return idVClaims;
     }
 
     @Override

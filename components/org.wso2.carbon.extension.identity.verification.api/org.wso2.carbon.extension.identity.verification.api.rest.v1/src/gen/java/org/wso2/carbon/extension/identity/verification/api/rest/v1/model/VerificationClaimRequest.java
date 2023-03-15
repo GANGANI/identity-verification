@@ -34,32 +34,11 @@ import javax.xml.bind.annotation.*;
 
 public class VerificationClaimRequest  {
   
-    private String username;
     private String identityVerificationProvider;
     private List<Claims> claims = null;
 
     private List<Property> properties = null;
 
-
-    /**
-    **/
-    public VerificationClaimRequest username(String username) {
-
-        this.username = username;
-        return this;
-    }
-    
-    @ApiModelProperty(example = "username", required = true, value = "")
-    @JsonProperty("username")
-    @Valid
-    @NotNull(message = "Property username cannot be null.")
-
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     /**
     **/
@@ -145,15 +124,14 @@ public class VerificationClaimRequest  {
             return false;
         }
         VerificationClaimRequest verificationClaimRequest = (VerificationClaimRequest) o;
-        return Objects.equals(this.username, verificationClaimRequest.username) &&
-            Objects.equals(this.identityVerificationProvider, verificationClaimRequest.identityVerificationProvider) &&
+        return Objects.equals(this.identityVerificationProvider, verificationClaimRequest.identityVerificationProvider) &&
             Objects.equals(this.claims, verificationClaimRequest.claims) &&
             Objects.equals(this.properties, verificationClaimRequest.properties);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, identityVerificationProvider, claims, properties);
+        return Objects.hash(identityVerificationProvider, claims, properties);
     }
 
     @Override
@@ -162,7 +140,6 @@ public class VerificationClaimRequest  {
         StringBuilder sb = new StringBuilder();
         sb.append("class VerificationClaimRequest {\n");
         
-        sb.append("    username: ").append(toIndentedString(username)).append("\n");
         sb.append("    identityVerificationProvider: ").append(toIndentedString(identityVerificationProvider)).append("\n");
         sb.append("    claims: ").append(toIndentedString(claims)).append("\n");
         sb.append("    properties: ").append(toIndentedString(properties)).append("\n");

@@ -29,7 +29,7 @@ import static org.wso2.carbon.extension.identity.verifier.util.IdentityVerifierC
 public class IdentityVerificationServiceImpl implements IdentityVerificationService {
 
     @Override
-    public IdentityVerifierData verifyIdentity(IdentityVerifierData identityVerifierData, int tenantId)
+    public IdentityVerifierData verifyIdentity(String userId, IdentityVerifierData identityVerifierData, int tenantId)
             throws IdentityVerificationException {
 
         String identityVerifierName = identityVerifierData.getIdentityVerifierName();
