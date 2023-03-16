@@ -28,6 +28,9 @@ import org.osgi.service.component.annotations.ReferenceCardinality;
 import org.osgi.service.component.annotations.ReferencePolicy;
 import org.wso2.carbon.extension.identity.verification.provider.IdVProviderManager;
 import org.wso2.carbon.extension.identity.verification.provider.IdVProviderManagerImpl;
+import org.wso2.carbon.extension.identity.verification.provider.model.IdentityVerificationProvider;
+import org.wso2.carbon.identity.application.common.model.IdentityProvider;
+import org.wso2.carbon.identity.secret.mgt.core.SecretsProcessor;
 import org.wso2.carbon.user.core.service.RealmService;
 
 /**
@@ -67,11 +70,29 @@ public class IdVProviderMgtServiceComponent {
             unbind = "unsetRealmService")
     protected void setRealmService(RealmService realmService) {
 
-        IdVProviderMgtDataHolder.setRealmService(realmService);
+        IdVProviderMgtDataHolder.getInstance().setRealmService(realmService);
     }
 
     protected void unsetRealmService(RealmService realmService) {
 
-        IdVProviderMgtDataHolder.setRealmService(null);
+        IdVProviderMgtDataHolder.getInstance().setRealmService(null);
+    }
+
+    @Reference(
+            name = "org.wso2.carbon.identity.secret.mgt.core.IdPSecretsProcessor",
+            service = SecretsProcessor.class,
+            cardinality = ReferenceCardinality.MANDATORY,
+            policy = ReferencePolicy.DYNAMIC,
+            unbind = "unsetIdVPSecretsProcessorService"
+    )
+    private void setIdVPSecretsProcessorService(SecretsProcessor<IdentityVerificationProvider>
+                                                           idVPSecretsProcessorService) {
+
+        IdVProviderMgtDataHolder.getInstance().setIdVPSecretsProcessorService(idVPSecretsProcessorService);
+    }
+
+    private void unsetIdVPSecretsProcessorService(SecretsProcessor<IdentityProvider> idPSecretsProcessorService) {
+
+        IdVProviderMgtDataHolder.getInstance().setIdVPSecretsProcessorService(null);
     }
 }

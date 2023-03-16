@@ -23,12 +23,15 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.extension.identity.verification.provider.exception.IdVProviderMgtException;
 import org.wso2.carbon.extension.identity.verification.provider.exception.IdvProviderMgtServerException;
+import org.wso2.carbon.extension.identity.verification.provider.internal.IdVProviderMgtDataHolder;
 import org.wso2.carbon.extension.identity.verification.provider.model.IdVConfigProperty;
 import org.wso2.carbon.extension.identity.verification.provider.model.IdentityVerificationProvider;
 import org.wso2.carbon.extension.identity.verification.provider.util.IdVProviderMgtConstants;
 import org.wso2.carbon.extension.identity.verification.provider.util.IdVProviderMgtExceptionManagement;
 import org.wso2.carbon.identity.base.IdentityRuntimeException;
 import org.wso2.carbon.identity.core.util.IdentityDatabaseUtil;
+import org.wso2.carbon.identity.core.util.IdentityTenantUtil;
+import org.wso2.carbon.identity.secret.mgt.core.exception.SecretManagementException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -354,10 +357,20 @@ public class IdVProviderManagementDAO {
     }
 
     private void addIDVProviderConfigs(IdentityVerificationProvider identityVerificationProvider, int idVPId,
-                                       int tenantId, Connection connection) throws SQLException {
+                                       int tenantId, Connection connection)
+            throws SQLException, SecretManagementException, IdVProviderMgtException {
 
         if (identityVerificationProvider.getIdVConfigProperties() == null) {
             identityVerificationProvider.setIdVConfigProperties(new IdVConfigProperty[0]);
+        }
+        if (IdVProviderMgtDataHolder.getInstance().getIdVPSecretsProcessorService() != null) {
+            identityVerificationProvider = IdVProviderMgtDataHolder.getInstance().getIdVPSecretsProcessorService().
+                    encryptAssociatedSecrets(identityVerificationProvider);
+        } else {
+            throw new IdVProviderMgtException("An error occurred while updating the secrets of the " +
+                    "identity provider : " + identityVerificationProvider.getIdVProviderName() + " in tenant : " +
+                    IdentityTenantUtil.getTenantDomain(tenantId) + ". The IdVPSecretsProcessorService " +
+                    "is not available.");
         }
         try (PreparedStatement addIDVProviderConfigsStmt = connection
                 .prepareStatement(IdVProviderMgtConstants.SQLQueries.ADD_IDVP_CONFIG_SQL)) {
@@ -434,6 +447,21 @@ public class IdVProviderManagementDAO {
                                            Connection connection)
             throws IdvProviderMgtServerException {
 
+        // Retrieve encrypted secrets from DB, decrypt and set to the federated authenticator configs.
+        if (IdVProviderMgtDataHolder.getInstance().getIdVPSecretsProcessorService() == null) {
+            throw new IdvProviderMgtServerException(
+                    "Error while retrieving secrets of identity provider: "  + " in tenant: " +
+                            tenantId + ". IdPSecretsProcessorService is not available.");
+        }
+        try {
+            if (identityVerificationProvider.getIdVConfigProperties().length > 0) {
+                identityVerificationProvider = IdVProviderMgtDataHolder.getInstance().getIdVPSecretsProcessorService().
+                        decryptAssociatedSecrets(identityVerificationProvider);
+            }
+        } catch (SecretManagementException e) {
+            throw new IdvProviderMgtServerException("Error while retrieving secrets of Identity provider : " +
+                    " in tenant : " + tenantId, e);
+        }
         IdVConfigProperty[] idVConfigProperties = new IdVConfigProperty[0];
         List<IdVConfigProperty> idVConfigPropertyList = new ArrayList<>();
         try (PreparedStatement getIdVProvidersStmt = connection
@@ -446,6 +474,7 @@ public class IdVProviderManagementDAO {
                     IdVConfigProperty idVConfigProperty = new IdVConfigProperty();
                     idVConfigProperty.setName(idVProviderResultSet.getString("PROPERTY_KEY"));
                     idVConfigProperty.setValue(idVProviderResultSet.getString("PROPERTY_VALUE"));
+                    idVConfigProperty.setConfidential(idVProviderResultSet.getBoolean("IS_SECRET"));
                     idVConfigPropertyList.add(idVConfigProperty);
                 }
                 identityVerificationProvider.setIdVConfigProperties(idVConfigPropertyList.toArray(idVConfigProperties));

@@ -17,6 +17,9 @@
  */
 package org.wso2.carbon.extension.identity.verification.provider.internal;
 
+import org.wso2.carbon.extension.identity.verification.provider.model.IdentityVerificationProvider;
+import org.wso2.carbon.identity.application.common.model.IdentityProvider;
+import org.wso2.carbon.identity.secret.mgt.core.SecretsProcessor;
 import org.wso2.carbon.user.core.service.RealmService;
 
 /**
@@ -24,19 +27,22 @@ import org.wso2.carbon.user.core.service.RealmService;
  */
 public class IdVProviderMgtDataHolder {
 
-    private static RealmService realmService;
+    public static IdVProviderMgtDataHolder instance = new IdVProviderMgtDataHolder();
+
+    public static IdVProviderMgtDataHolder getInstance() {
+
+        return instance;
+    }
+    private RealmService realmService;
+    private SecretsProcessor<IdentityVerificationProvider> idVPSecretsProcessorService;
 
     /**
      * Get the RealmService.
      *
      * @return RealmService.
      */
-    public static RealmService getRealmService() {
+    public RealmService getRealmService() {
 
-        if (realmService == null) {
-            throw new RuntimeException("RealmService was not set during the " +
-                    "IdVProviderMgtServiceComponent startup");
-        }
         return realmService;
     }
 
@@ -45,8 +51,19 @@ public class IdVProviderMgtDataHolder {
      *
      * @param realmService RealmService.
      */
-    public static void setRealmService(RealmService realmService) {
+    public void setRealmService(RealmService realmService) {
 
-        IdVProviderMgtDataHolder.realmService = realmService;
+        this.realmService = realmService;
+    }
+
+    public SecretsProcessor<IdentityVerificationProvider> getIdVPSecretsProcessorService() {
+
+        return idVPSecretsProcessorService;
+    }
+
+    public void setIdVPSecretsProcessorService(SecretsProcessor<IdentityVerificationProvider>
+                                                      idVPSecretsProcessorService) {
+
+        this.idVPSecretsProcessorService = idVPSecretsProcessorService;
     }
 }

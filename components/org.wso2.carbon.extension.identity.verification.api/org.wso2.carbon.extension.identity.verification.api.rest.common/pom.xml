@@ -121,20 +121,14 @@
         <dependency>
             <groupId>org.wso2.carbon.extension.identity.verification</groupId>
             <artifactId>org.wso2.carbon.extension.identity.verification.claim.mgt</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.extension.identity.verification</groupId>
             <artifactId>org.wso2.carbon.extension.identity.verifier</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.extension.identity.verification</groupId>
             <artifactId>org.wso2.carbon.extension.identity.verification.provider</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.wso2.carbon.identity.framework</groupId>
