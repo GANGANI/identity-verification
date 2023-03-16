@@ -246,6 +246,7 @@ public class IdentityVerificationProviderService {
         IdVConfigProperty idVConfigProperty = new IdVConfigProperty();
         idVConfigProperty.setName(apiProperty.getKey());
         idVConfigProperty.setValue(apiProperty.getValue());
+        idVConfigProperty.setConfidential(apiProperty.getIsSecret());
         return idVConfigProperty;
     };
 
@@ -254,6 +255,7 @@ public class IdentityVerificationProviderService {
         ConfigProperty configProperty = new ConfigProperty();
         configProperty.setKey(apiProperty.getName());
         configProperty.setValue(apiProperty.getValue());
+        configProperty.setIsSecret(apiProperty.isConfidential());
         return configProperty;
     };
 

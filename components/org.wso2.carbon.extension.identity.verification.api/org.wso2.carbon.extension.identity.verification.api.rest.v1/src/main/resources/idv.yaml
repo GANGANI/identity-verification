@@ -1000,6 +1000,9 @@ components:
         value:
           type: string
           example: somePropertyValue
+        isSecret:
+          type: boolean
+          example: false
     Property:
       type: object
       properties:

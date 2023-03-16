@@ -32,6 +32,7 @@ public class ConfigProperty  {
   
     private String key;
     private String value;
+    private Boolean isSecret;
 
     /**
     **/
@@ -69,6 +70,24 @@ public class ConfigProperty  {
         this.value = value;
     }
 
+    /**
+    **/
+    public ConfigProperty isSecret(Boolean isSecret) {
+
+        this.isSecret = isSecret;
+        return this;
+    }
+    
+    @ApiModelProperty(example = "false", value = "")
+    @JsonProperty("isSecret")
+    @Valid
+    public Boolean getIsSecret() {
+        return isSecret;
+    }
+    public void setIsSecret(Boolean isSecret) {
+        this.isSecret = isSecret;
+    }
+
 
 
     @Override
@@ -82,12 +101,13 @@ public class ConfigProperty  {
         }
         ConfigProperty configProperty = (ConfigProperty) o;
         return Objects.equals(this.key, configProperty.key) &&
-            Objects.equals(this.value, configProperty.value);
+            Objects.equals(this.value, configProperty.value) &&
+            Objects.equals(this.isSecret, configProperty.isSecret);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(key, value);
+        return Objects.hash(key, value, isSecret);
     }
 
     @Override
@@ -98,6 +118,7 @@ public class ConfigProperty  {
         
         sb.append("    key: ").append(toIndentedString(key)).append("\n");
         sb.append("    value: ").append(toIndentedString(value)).append("\n");
+        sb.append("    isSecret: ").append(toIndentedString(isSecret)).append("\n");
         sb.append("}");
         return sb.toString();
     }
