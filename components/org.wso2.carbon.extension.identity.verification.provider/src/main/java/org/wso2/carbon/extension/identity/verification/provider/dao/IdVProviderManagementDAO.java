@@ -167,6 +167,8 @@ public class IdVProviderManagementDAO {
         } catch (SQLException e) {
             throw IdVProviderMgtExceptionManagement.handleServerException(IdVProviderMgtConstants.ErrorMessage.
                     ERROR_ADDING_IDV_PROVIDER, e);
+        } catch (SecretManagementException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -209,6 +211,8 @@ public class IdVProviderManagementDAO {
         } catch (SQLException e) {
             throw IdVProviderMgtExceptionManagement.handleServerException(IdVProviderMgtConstants.ErrorMessage.
                     ERROR_ADDING_IDV_PROVIDER, e);
+        } catch (SecretManagementException e) {
+            throw new RuntimeException(e);
         }
     }
 
@@ -401,7 +405,7 @@ public class IdVProviderManagementDAO {
 
     private void updateIDVProviderConfigs(IdentityVerificationProvider identityVerificationProvider,
                                           int idVPId, int tenantId, Connection connection)
-            throws SQLException {
+            throws SQLException, SecretManagementException, IdVProviderMgtException {
 
         deleteIDVProviderConfigs(idVPId, tenantId, connection);
         if (ArrayUtils.isEmpty(identityVerificationProvider.getIdVConfigProperties())) {
