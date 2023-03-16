@@ -23,15 +23,250 @@ security:
   - OAuth2: []
   - BasicAuth: []
 tags:
-  - name: Identity Verification
+  - name: Me - Identity Verification
+    description: Identity Verification API for authenticated user
+  - name: Admin - Identity Verification
     description: Identity Verification API
   - name: Identity Verification Providers
     description: Identity Verification Provider API
 paths:
+  /me/verify:
+    post:
+      tags:
+        - Me - Identity Verification
+      summary: Verify an Identity
+      description: This API provides the capability to verify a user with the configured verification required attributes
+      operationId: meVerifyIdentity
+      requestBody:
+        description: Verify an identity
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/verifyRequest'
+        required: true
+      responses:
+        '201':
+          description: Accepted
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/verificationPostResponse'
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/verificationPostResponse'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /me/claims:
+    get:
+      tags:
+        - Me - Identity Verification
+      summary: Get the identity verification claims of a user
+      description: This API provides the capability to retrieve the verification details of a user
+      operationId: meGetIdVClaims
+      parameters:
+        - $ref: '#/components/parameters/idVPQueryParam'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/verificationClaimResponse'
+        '400':
+          description: Invalid status value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - Me - Identity Verification
+      summary: Add identity verification claim.
+      description: "This API provides the capability to add verification claim data"
+      operationId: meAddIdVClaim
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/verificationClaimPostResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '409':
+          description: Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/verificationClaimPostRequest'
+        description: This represents the identity provider to be created.
+        required: true
+  /me/claims/{claim-id}:
+    get:
+      tags:
+        - Me - Identity Verification
+      summary: Get identity verification claim
+      description: This API provides the capability to retrieve a identity verification claim of a user.
+      operationId: meGetIdVClaim
+      parameters:
+        - name: claim-id
+          in: path
+          description: Claim that needs to retrieve verification metadata
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/verificationClaimResponse'
+        '400':
+          description: Invalid status value
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    put:
+      tags:
+        - Me - Identity Verification
+      summary: Update identity verification claim
+      description: This API provides the capability to update a identity verification claim of a user.
+      operationId: meUpdateIdVClaim
+      parameters:
+        - name: claim-id
+          in: path
+          description: Claim that needs to retrieve verification metadata
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/verificationClaimResponse'
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/verificationClaimUpdateRequest'
+        required: true
   /users/{user-id}/verify:
     post:
       tags:
-        - Identity Verification
+        - Admin - Identity Verification
       summary: Verify an Identity
       description: This API provides the capability to verify a user with the configured verification required attributes
       operationId: verifyIdentity
@@ -85,7 +320,7 @@ paths:
   /users/{user-id}/claims:
     get:
       tags:
-        - Identity Verification
+        - Admin - Identity Verification
       summary: Get the identity verification claims of a user
       description: This API provides the capability to retrieve the verification details of a user
       operationId: getIdVClaims
@@ -105,7 +340,7 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/verificationGetResponse'
+                  $ref: '#/components/schemas/verificationClaimResponse'
         '400':
           description: Invalid status value
           content:
@@ -130,7 +365,7 @@ paths:
                 $ref: '#/components/schemas/Error'
     post:
       tags:
-        - Identity Verification
+        - Admin - Identity Verification
       summary: Add identity verification claim.
       description: "This API provides the capability to add verification claim data"
       operationId: addIdVClaim
@@ -191,7 +426,7 @@ paths:
   /users/{user-id}/claims/{claim-id}:
     get:
       tags:
-        - Identity Verification
+        - Admin - Identity Verification
       summary: Get identity verification claim
       description: This API provides the capability to retrieve a identity verification claim of a user.
       operationId: getIdVClaim
@@ -241,7 +476,7 @@ paths:
                 $ref: '#/components/schemas/Error'
     put:
       tags:
-        - Identity Verification
+        - Admin - Identity Verification
       summary: Update identity verification claim
       description: This API provides the capability to update a identity verification claim of a user.
       operationId: updateIdVClaim
@@ -606,22 +841,9 @@ components:
     verificationPostResponse:
       type: object
       properties:
-        username:
-          type: string
-          example: username
         identityVerificationProvider:
           type: string
           example: evidentID
-        claims:
-          type: array
-          items:
-            $ref: '#/components/schemas/verificationClaimResponse'
-    verificationGetResponse:
-      type: object
-      properties:
-        userId:
-          type: string
-          example: "123e4567-e89b-12d3-a456-556642440000"
         claims:
           type: array
           items:
@@ -698,8 +920,8 @@ components:
           items:
             $ref: '#/components/schemas/Property'
       required:
-        - username
         - identityVerificationProvider
+        - claims
     claims:
       type: object
       properties:

@@ -17,9 +17,15 @@
 package org.wso2.carbon.extension.identity.verification.api.rest.v1.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.wso2.carbon.extension.identity.verification.api.rest.v1.*;
+import org.wso2.carbon.extension.identity.verification.api.rest.v1.UsersApiService;
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.core.IdentityVerificationService;
-import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.*;
+import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationClaimRequest;
+import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationClaimResponse;
+import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationClaimUpdateRequest;
+import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationGetResponse;
+import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationPostResponse;
+import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerifyRequest;
+
 import java.util.List;
 import javax.ws.rs.core.Response;
 

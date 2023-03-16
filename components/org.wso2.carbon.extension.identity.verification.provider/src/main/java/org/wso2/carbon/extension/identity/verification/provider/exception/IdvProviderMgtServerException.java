@@ -15,30 +15,33 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.carbon.extension.identity.verification.provider;
+package org.wso2.carbon.extension.identity.verification.provider.exception;
+
+import org.wso2.carbon.extension.identity.verification.provider.exception.IdVProviderMgtException;
 
 /**
- * This class contains the implementation for the client exceptions.
+ * This class contains the implementation for the server exceptions.
  */
-public class IdVProviderMgtClientException extends IdVProviderMgtException {
+public class IdvProviderMgtServerException extends IdVProviderMgtException {
 
-    public IdVProviderMgtClientException(String message) {
+    public IdvProviderMgtServerException(String message) {
 
         super(message);
     }
 
-    public IdVProviderMgtClientException(String message, Throwable cause) {
+    public IdvProviderMgtServerException(String message, Throwable cause) {
 
         super(message, cause);
     }
 
-    public IdVProviderMgtClientException(String errorCode, String message) {
+    public IdvProviderMgtServerException(String errorCode, String message) {
 
         super(errorCode, message);
     }
 
-    public IdVProviderMgtClientException(String errorCode, String message, Throwable throwable) {
+    public IdvProviderMgtServerException(String errorCode, String message, Throwable throwable) {
 
         super(errorCode, message, throwable);
     }
+
 }

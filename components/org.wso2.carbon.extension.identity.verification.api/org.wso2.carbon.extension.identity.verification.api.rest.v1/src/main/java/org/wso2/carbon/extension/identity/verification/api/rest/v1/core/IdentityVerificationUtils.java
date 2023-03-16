@@ -26,10 +26,10 @@ import org.wso2.carbon.extension.identity.verification.api.rest.common.Constants
 import org.wso2.carbon.extension.identity.verification.api.rest.common.ContextLoader;
 import org.wso2.carbon.extension.identity.verification.api.rest.common.error.APIError;
 import org.wso2.carbon.extension.identity.verification.api.rest.common.error.ErrorResponse;
-import org.wso2.carbon.extension.identity.verification.claim.mgt.IdVClaimMgtClientException;
-import org.wso2.carbon.extension.identity.verification.claim.mgt.IdvClaimMgtServerException;
-import org.wso2.carbon.extension.identity.verification.provider.IdVProviderMgtClientException;
-import org.wso2.carbon.extension.identity.verification.provider.IdvProviderMgtServerException;
+import org.wso2.carbon.extension.identity.verification.claim.mgt.exception.IdVClaimMgtClientException;
+import org.wso2.carbon.extension.identity.verification.claim.mgt.exception.IdvClaimMgtServerException;
+import org.wso2.carbon.extension.identity.verification.provider.exception.IdVProviderMgtClientException;
+import org.wso2.carbon.extension.identity.verification.provider.exception.IdvProviderMgtServerException;
 import org.wso2.carbon.identity.base.IdentityException;
 import org.wso2.carbon.identity.core.util.IdentityTenantUtil;
 

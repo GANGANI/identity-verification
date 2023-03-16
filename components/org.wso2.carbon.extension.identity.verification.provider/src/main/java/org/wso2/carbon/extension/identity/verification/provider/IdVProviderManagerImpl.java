@@ -21,6 +21,8 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.carbon.extension.identity.verification.provider.dao.IdVProviderManagementDAO;
+import org.wso2.carbon.extension.identity.verification.provider.exception.IdVProviderMgtClientException;
+import org.wso2.carbon.extension.identity.verification.provider.exception.IdVProviderMgtException;
 import org.wso2.carbon.extension.identity.verification.provider.model.IdentityVerificationProvider;
 import org.wso2.carbon.extension.identity.verification.provider.util.IdVProviderMgtConstants;
 import org.wso2.carbon.extension.identity.verification.provider.util.IdVProviderMgtExceptionManagement;

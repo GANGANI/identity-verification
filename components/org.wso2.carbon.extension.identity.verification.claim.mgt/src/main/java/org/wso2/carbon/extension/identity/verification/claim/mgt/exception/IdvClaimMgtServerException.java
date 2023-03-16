@@ -15,28 +15,33 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.carbon.extension.identity.verification.claim.mgt;
+package org.wso2.carbon.extension.identity.verification.claim.mgt.exception;
 
-import org.wso2.carbon.identity.base.IdentityException;
+import org.wso2.carbon.extension.identity.verification.claim.mgt.exception.IdVClaimMgtException;
 
 /**
- * This class contains the implementation of IdVClaimMgtException.
+ * This class contains the implementation for the server exceptions.
  */
-public class IdVClaimMgtException extends IdentityException {
+public class IdvClaimMgtServerException extends IdVClaimMgtException {
 
-    public IdVClaimMgtException(String message) {
+    public IdvClaimMgtServerException(String message) {
+
         super(message);
     }
 
-    public IdVClaimMgtException(String message, Throwable cause) {
+    public IdvClaimMgtServerException(String message, Throwable cause) {
+
         super(message, cause);
     }
 
-    public IdVClaimMgtException(String errorCode, String message) {
+    public IdvClaimMgtServerException(String errorCode, String message) {
+
         super(errorCode, message);
     }
 
-    public IdVClaimMgtException(String errorCode, String message, Throwable cause) {
-        super(errorCode, message, cause);
+    public IdvClaimMgtServerException(String errorCode, String message, Throwable throwable) {
+
+        super(errorCode, message, throwable);
     }
+
 }

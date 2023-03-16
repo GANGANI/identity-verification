@@ -32,15 +32,15 @@ import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerifyR
 import javax.ws.rs.core.Response;
 
 
-public interface UsersApiService {
+public interface MeApiService {
 
-      public Response addIdVClaim(String userId, List<VerificationClaimRequest> verificationClaimRequest);
+      public Response meAddIdVClaim(List<VerificationClaimRequest> verificationClaimRequest);
 
-      public Response getIdVClaim(String userId, String claimId);
+      public Response meGetIdVClaim(String claimId);
 
-      public Response getIdVClaims(String userId, String idvpId);
+      public Response meGetIdVClaims(String idvpId);
 
-      public Response updateIdVClaim(String claimId, String userId, VerificationClaimUpdateRequest verificationClaimUpdateRequest);
+      public Response meUpdateIdVClaim(String claimId, VerificationClaimUpdateRequest verificationClaimUpdateRequest);
 
-      public Response verifyIdentity(String userId, VerifyRequest verifyRequest);
+      public Response meVerifyIdentity(VerifyRequest verifyRequest);
 }

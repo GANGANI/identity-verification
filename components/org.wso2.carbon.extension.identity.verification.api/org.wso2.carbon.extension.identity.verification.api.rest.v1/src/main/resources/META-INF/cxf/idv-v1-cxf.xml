@@ -21,6 +21,7 @@
     <bean class="org.wso2.carbon.extension.identity.verification.api.rest.v1.core.IdentityVerificationService"/>
     <bean class="org.wso2.carbon.extension.identity.verification.api.rest.v1.impl.UsersApiServiceImpl"/>
     <bean class="org.wso2.carbon.extension.identity.verification.api.rest.v1.impl.ProvidersApiServiceImpl"/>
+    <bean class="org.wso2.carbon.extension.identity.verification.api.rest.v1.impl.MeApiServiceImpl"/>
     <bean id="IdVProviderManagerFactoryBean"
           class="org.wso2.carbon.extension.identity.verification.api.rest.common.factory.IdVProviderManagerOSGIFactory"/>
     <bean id="IdVClaimManagerFactoryBean"

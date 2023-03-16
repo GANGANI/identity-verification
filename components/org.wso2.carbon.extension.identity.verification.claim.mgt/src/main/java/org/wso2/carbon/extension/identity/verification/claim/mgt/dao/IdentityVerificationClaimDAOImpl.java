@@ -20,7 +20,7 @@ package org.wso2.carbon.extension.identity.verification.claim.mgt.dao;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONObject;
-import org.wso2.carbon.extension.identity.verification.claim.mgt.IdVClaimMgtException;
+import org.wso2.carbon.extension.identity.verification.claim.mgt.exception.IdVClaimMgtException;
 import org.wso2.carbon.extension.identity.verification.claim.mgt.model.IdVClaim;
 import org.wso2.carbon.extension.identity.verification.claim.mgt.util.IdVClaimMgtConstants;
 import org.wso2.carbon.extension.identity.verification.claim.mgt.util.IdVClaimMgtExceptionManagement;

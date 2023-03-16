@@ -29,7 +29,7 @@ import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.Verific
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationClaimUpdateRequest;
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationPostResponse;
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerifyRequest;
-import org.wso2.carbon.extension.identity.verification.api.rest.v1.UsersApiService;
+import org.wso2.carbon.extension.identity.verification.api.rest.v1.MeApiService;
 
 import javax.validation.Valid;
 import javax.ws.rs.*;
@@ -38,17 +38,17 @@ import io.swagger.annotations.*;
 
 import javax.validation.constraints.*;
 
-@Path("/users")
-@Api(description = "The users API")
+@Path("/me")
+@Api(description = "The me API")
 
-public class UsersApi  {
+public class MeApi  {
 
     @Autowired
-    private UsersApiService delegate;
+    private MeApiService delegate;
 
     @Valid
     @POST
-    @Path("/{user-id}/claims")
+    @Path("/claims")
     @Consumes({ "application/json" })
     @Produces({ "application/json", "application/xml",  })
     @ApiOperation(value = "Add identity verification claim.", notes = "This API provides the capability to add verification claim data", response = List.class, responseContainer = "List", authorizations = {
@@ -56,7 +56,7 @@ public class UsersApi  {
         @Authorization(value = "OAuth2", scopes = {
             
         })
-    }, tags={ "Admin - Identity Verification", })
+    }, tags={ "Me - Identity Verification", })
     @ApiResponses(value = { 
         @ApiResponse(code = 201, message = "Successful response", response = VerificationClaimResponse.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
@@ -65,14 +65,14 @@ public class UsersApi  {
         @ApiResponse(code = 409, message = "Conflict", response = Error.class),
         @ApiResponse(code = 500, message = "Server Error", response = Error.class)
     })
-    public Response addIdVClaim(@ApiParam(value = "user id of the user",required=true) @PathParam("user-id") String userId, @ApiParam(value = "This represents the identity provider to be created." ,required=true) @Valid List<VerificationClaimRequest> verificationClaimRequest) {
+    public Response meAddIdVClaim(@ApiParam(value = "This represents the identity provider to be created." ,required=true) @Valid List<VerificationClaimRequest> verificationClaimRequest) {
 
-        return delegate.addIdVClaim(userId,  verificationClaimRequest );
+        return delegate.meAddIdVClaim(verificationClaimRequest );
     }
 
     @Valid
     @GET
-    @Path("/{user-id}/claims/{claim-id}")
+    @Path("/claims/{claim-id}")
     
     @Produces({ "application/json" })
     @ApiOperation(value = "Get identity verification claim", notes = "This API provides the capability to retrieve a identity verification claim of a user.", response = VerificationClaimResponse.class, responseContainer = "List", authorizations = {
@@ -80,7 +80,7 @@ public class UsersApi  {
         @Authorization(value = "OAuth2", scopes = {
             
         })
-    }, tags={ "Admin - Identity Verification", })
+    }, tags={ "Me - Identity Verification", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = VerificationClaimResponse.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid status value", response = Error.class),
@@ -89,14 +89,14 @@ public class UsersApi  {
         @ApiResponse(code = 404, message = "Not Found", response = Error.class),
         @ApiResponse(code = 500, message = "Server Error", response = Error.class)
     })
-    public Response getIdVClaim(@ApiParam(value = "user id of the user",required=true) @PathParam("user-id") String userId, @ApiParam(value = "Claim that needs to retrieve verification metadata",required=true) @PathParam("claim-id") String claimId) {
+    public Response meGetIdVClaim(@ApiParam(value = "Claim that needs to retrieve verification metadata",required=true) @PathParam("claim-id") String claimId) {
 
-        return delegate.getIdVClaim(userId,  claimId );
+        return delegate.meGetIdVClaim(claimId );
     }
 
     @Valid
     @GET
-    @Path("/{user-id}/claims")
+    @Path("/claims")
     
     @Produces({ "application/json" })
     @ApiOperation(value = "Get the identity verification claims of a user", notes = "This API provides the capability to retrieve the verification details of a user", response = VerificationClaimResponse.class, responseContainer = "List", authorizations = {
@@ -104,7 +104,7 @@ public class UsersApi  {
         @Authorization(value = "OAuth2", scopes = {
             
         })
-    }, tags={ "Admin - Identity Verification", })
+    }, tags={ "Me - Identity Verification", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "successful operation", response = VerificationClaimResponse.class, responseContainer = "List"),
         @ApiResponse(code = 400, message = "Invalid status value", response = Error.class),
@@ -113,14 +113,14 @@ public class UsersApi  {
         @ApiResponse(code = 404, message = "Not Found", response = Error.class),
         @ApiResponse(code = 500, message = "Server Error", response = Error.class)
     })
-    public Response getIdVClaims(@ApiParam(value = "user id of the user",required=true) @PathParam("user-id") String userId,     @Valid@ApiParam(value = "Id of the identity verification provider. ")  @QueryParam("idvp-id") String idvpId) {
+    public Response meGetIdVClaims(    @Valid@ApiParam(value = "Id of the identity verification provider. ")  @QueryParam("idvp-id") String idvpId) {
 
-        return delegate.getIdVClaims(userId,  idvpId );
+        return delegate.meGetIdVClaims(idvpId );
     }
 
     @Valid
     @PUT
-    @Path("/{user-id}/claims/{claim-id}")
+    @Path("/claims/{claim-id}")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
     @ApiOperation(value = "Update identity verification claim", notes = "This API provides the capability to update a identity verification claim of a user.", response = VerificationClaimResponse.class, authorizations = {
@@ -128,7 +128,7 @@ public class UsersApi  {
         @Authorization(value = "OAuth2", scopes = {
             
         })
-    }, tags={ "Admin - Identity Verification", })
+    }, tags={ "Me - Identity Verification", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Successful response", response = VerificationClaimResponse.class),
         @ApiResponse(code = 400, message = "Bad Request", response = Error.class),
@@ -137,14 +137,14 @@ public class UsersApi  {
         @ApiResponse(code = 404, message = "Not Found", response = Error.class),
         @ApiResponse(code = 500, message = "Server Error", response = Error.class)
     })
-    public Response updateIdVClaim(@ApiParam(value = "Claim that needs to retrieve verification metadata",required=true) @PathParam("claim-id") String claimId, @ApiParam(value = "user id of the user",required=true) @PathParam("user-id") String userId, @ApiParam(value = "" ,required=true) @Valid VerificationClaimUpdateRequest verificationClaimUpdateRequest) {
+    public Response meUpdateIdVClaim(@ApiParam(value = "Claim that needs to retrieve verification metadata",required=true) @PathParam("claim-id") String claimId, @ApiParam(value = "" ,required=true) @Valid VerificationClaimUpdateRequest verificationClaimUpdateRequest) {
 
-        return delegate.updateIdVClaim(claimId,  userId,  verificationClaimUpdateRequest );
+        return delegate.meUpdateIdVClaim(claimId,  verificationClaimUpdateRequest );
     }
 
     @Valid
     @POST
-    @Path("/{user-id}/verify")
+    @Path("/verify")
     @Consumes({ "application/json" })
     @Produces({ "application/json" })
     @ApiOperation(value = "Verify an Identity", notes = "This API provides the capability to verify a user with the configured verification required attributes", response = VerificationPostResponse.class, responseContainer = "List", authorizations = {
@@ -152,7 +152,7 @@ public class UsersApi  {
         @Authorization(value = "OAuth2", scopes = {
             
         })
-    }, tags={ "Admin - Identity Verification" })
+    }, tags={ "Me - Identity Verification" })
     @ApiResponses(value = { 
         @ApiResponse(code = 201, message = "Accepted", response = VerificationPostResponse.class, responseContainer = "List"),
         @ApiResponse(code = 200, message = "Successful operation", response = VerificationPostResponse.class, responseContainer = "List"),
@@ -161,9 +161,9 @@ public class UsersApi  {
         @ApiResponse(code = 403, message = "Forbidden", response = Void.class),
         @ApiResponse(code = 500, message = "Server Error", response = Error.class)
     })
-    public Response verifyIdentity(@ApiParam(value = "user id of the user",required=true) @PathParam("user-id") String userId, @ApiParam(value = "Verify an identity" ,required=true) @Valid VerifyRequest verifyRequest) {
+    public Response meVerifyIdentity(@ApiParam(value = "Verify an identity" ,required=true) @Valid VerifyRequest verifyRequest) {
 
-        return delegate.verifyIdentity(userId,  verifyRequest );
+        return delegate.meVerifyIdentity(verifyRequest );
     }
 
 }

@@ -17,6 +17,7 @@
  */
 package org.wso2.carbon.extension.identity.verification.claim.mgt;
 
+import org.wso2.carbon.extension.identity.verification.claim.mgt.exception.IdVClaimMgtException;
 import org.wso2.carbon.extension.identity.verification.claim.mgt.model.IdVClaim;
 
 import java.util.List;

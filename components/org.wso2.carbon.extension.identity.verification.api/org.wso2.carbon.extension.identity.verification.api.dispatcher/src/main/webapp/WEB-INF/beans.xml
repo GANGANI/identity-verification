@@ -38,6 +38,7 @@
         <jaxrs:serviceBeans>
             <bean class="org.wso2.carbon.extension.identity.verification.api.rest.v1.ProvidersApi"/>
             <bean class="org.wso2.carbon.extension.identity.verification.api.rest.v1.UsersApi"/>
+            <bean class="org.wso2.carbon.extension.identity.verification.api.rest.v1.MeApi"/>
         </jaxrs:serviceBeans>
         <jaxrs:providers>
             <bean class="com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider">

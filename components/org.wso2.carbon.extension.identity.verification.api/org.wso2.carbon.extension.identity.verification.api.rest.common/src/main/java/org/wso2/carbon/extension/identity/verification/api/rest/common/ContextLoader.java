@@ -10,10 +10,21 @@
 package org.wso2.carbon.extension.identity.verification.api.rest.common;
 
 import org.wso2.carbon.base.MultitenantConstants;
+import org.wso2.carbon.context.CarbonContext;
 import org.wso2.carbon.context.PrivilegedCarbonContext;
+import org.wso2.carbon.extension.identity.verification.claim.mgt.exception.IdvClaimMgtServerException;
+import org.wso2.carbon.extension.identity.verification.claim.mgt.util.IdVClaimMgtConstants;
+import org.wso2.carbon.extension.identity.verification.claim.mgt.util.IdVClaimMgtExceptionManagement;
 import org.wso2.carbon.identity.application.common.model.User;
+import org.wso2.carbon.identity.core.util.IdentityTenantUtil;
 import org.wso2.carbon.identity.core.util.IdentityUtil;
+import org.wso2.carbon.user.api.UserRealm;
+import org.wso2.carbon.user.api.UserStoreException;
+import org.wso2.carbon.user.api.UserStoreManager;
+import org.wso2.carbon.user.core.UniqueIDUserStoreManager;
 import org.wso2.carbon.user.core.UserStoreConfigConstants;
+import org.wso2.carbon.user.core.common.AbstractUserStoreManager;
+import org.wso2.carbon.user.core.service.RealmService;
 
 import javax.ws.rs.core.Response;
 
@@ -35,6 +46,7 @@ public class ContextLoader {
 
     /**
      * Retrieves authenticated username from carbon context.
+     *
      * @return username of the authenticated user.
      */
     public static String getUsernameFromContext() {
@@ -44,15 +56,45 @@ public class ContextLoader {
 
     /**
      * Retrieves authenticated username from carbon context.
+     *
      * @return username of the authenticated user.
      */
-    public static User getUserFromContext() {
+    public static String getUserIdFromContext() {
 
-        return getUser(getTenantDomainFromContext(), getUsernameFromContext());
+        try {
+            UserRealm userRealm = CarbonContext.getThreadLocalCarbonContext().getUserRealm();
+            AbstractUserStoreManager userStoreManager = (AbstractUserStoreManager) userRealm.getUserStoreManager();
+
+//            if (userStoreManager == null) {
+//                if (log.isDebugEnabled()) {
+//                    log.debug("Userstore Manager is null");
+//                }
+//                return Response.status(Response.Status.INTERNAL_SERVER_ERROR).build();
+//            }
+            return userStoreManager.getUserIDFromUserName(getUsernameFromContext());
+        } catch (org.wso2.carbon.user.core.UserStoreException e) {
+            throw new RuntimeException(e);
+        } catch (UserStoreException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private static UniqueIDUserStoreManager getUniqueIdEnabledUserStoreManager(RealmService realmService,
+                                                                               String tenantDomain)
+            throws IdvClaimMgtServerException, UserStoreException {
+
+        UserStoreManager userStoreManager = realmService.getTenantUserRealm(
+                IdentityTenantUtil.getTenantId(tenantDomain)).getUserStoreManager();
+        if (!(userStoreManager instanceof UniqueIDUserStoreManager)) {
+            throw IdVClaimMgtExceptionManagement.handleServerException(
+                    IdVClaimMgtConstants.ErrorMessage.ERROR_INVALID_USER_ID);
+        }
+        return (UniqueIDUserStoreManager) userStoreManager;
     }
 
     /**
      * Retrieves loaded tenant domain from carbon context.
+     *
      * @return tenant domain of the request is being served.
      */
     public static String getTenantDomainFromContext() {
@@ -66,12 +108,13 @@ public class ContextLoader {
 
     /**
      * Build user object from tenant domain and username.
-     * 
+     *
      * @param tenantDomain
      * @param decodedUsername
      * @return
      */
     public static User getUser(String tenantDomain, String decodedUsername) {
+
         String realm = UserStoreConfigConstants.PRIMARY;
         String username = null;
         String[] strComponent = decodedUsername.split("/");

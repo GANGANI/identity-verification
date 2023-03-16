@@ -35,7 +35,7 @@ import javax.xml.bind.annotation.*;
 public class VerifyRequest  {
   
     private String identityVerificationProvider;
-    private List<Claims> claims = null;
+    private List<Claims> claims = new ArrayList<>();
 
     private List<Property> properties = null;
 
@@ -68,9 +68,11 @@ public class VerifyRequest  {
         return this;
     }
     
-    @ApiModelProperty(value = "")
+    @ApiModelProperty(required = true, value = "")
     @JsonProperty("claims")
     @Valid
+    @NotNull(message = "Property claims cannot be null.")
+
     public List<Claims> getClaims() {
         return claims;
     }
@@ -79,9 +81,6 @@ public class VerifyRequest  {
     }
 
     public VerifyRequest addClaimsItem(Claims claimsItem) {
-        if (this.claims == null) {
-            this.claims = new ArrayList<>();
-        }
         this.claims.add(claimsItem);
         return this;
     }

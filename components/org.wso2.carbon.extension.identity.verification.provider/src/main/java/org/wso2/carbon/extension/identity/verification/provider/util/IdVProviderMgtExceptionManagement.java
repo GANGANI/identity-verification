@@ -18,8 +18,8 @@
 package org.wso2.carbon.extension.identity.verification.provider.util;
 
 import org.apache.commons.lang.StringUtils;
-import org.wso2.carbon.extension.identity.verification.provider.IdVProviderMgtClientException;
-import org.wso2.carbon.extension.identity.verification.provider.IdvProviderMgtServerException;
+import org.wso2.carbon.extension.identity.verification.provider.exception.IdVProviderMgtClientException;
+import org.wso2.carbon.extension.identity.verification.provider.exception.IdvProviderMgtServerException;
 
 /**
  * This class contains the utility methods for IdV Provider Mgt.

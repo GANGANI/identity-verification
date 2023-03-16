@@ -19,8 +19,8 @@
 package org.wso2.carbon.extension.identity.verification.claim.mgt.util;
 
 import org.apache.commons.lang.StringUtils;
-import org.wso2.carbon.extension.identity.verification.claim.mgt.IdVClaimMgtClientException;
-import org.wso2.carbon.extension.identity.verification.claim.mgt.IdvClaimMgtServerException;
+import org.wso2.carbon.extension.identity.verification.claim.mgt.exception.IdVClaimMgtClientException;
+import org.wso2.carbon.extension.identity.verification.claim.mgt.exception.IdvClaimMgtServerException;
 
 /**
  * This class contains the implementation for the exception management.

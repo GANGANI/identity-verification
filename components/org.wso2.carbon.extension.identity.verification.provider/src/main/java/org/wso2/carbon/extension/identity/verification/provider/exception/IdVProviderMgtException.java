@@ -15,7 +15,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.wso2.carbon.extension.identity.verification.provider;
+package org.wso2.carbon.extension.identity.verification.provider.exception;
 
 import org.wso2.carbon.identity.base.IdentityException;
 

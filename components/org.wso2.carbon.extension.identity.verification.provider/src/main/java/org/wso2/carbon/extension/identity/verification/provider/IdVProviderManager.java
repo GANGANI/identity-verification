@@ -17,6 +17,7 @@
  */
 package org.wso2.carbon.extension.identity.verification.provider;
 
+import org.wso2.carbon.extension.identity.verification.provider.exception.IdVProviderMgtException;
 import org.wso2.carbon.extension.identity.verification.provider.model.IdentityVerificationProvider;
 
 import java.util.List;

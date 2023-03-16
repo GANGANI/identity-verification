@@ -23,7 +23,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.wso2.carbon.extension.identity.verification.claim.mgt.IdvClaimMgtServerException;
+import org.wso2.carbon.extension.identity.verification.claim.mgt.exception.IdvClaimMgtServerException;
 import org.wso2.carbon.extension.identity.verification.claim.mgt.model.IdVClaim;
 import org.wso2.carbon.extension.identity.verification.claim.mgt.util.IdVClaimMgtConstants;
 import org.wso2.carbon.extension.identity.verification.claim.mgt.util.IdVClaimMgtExceptionManagement;

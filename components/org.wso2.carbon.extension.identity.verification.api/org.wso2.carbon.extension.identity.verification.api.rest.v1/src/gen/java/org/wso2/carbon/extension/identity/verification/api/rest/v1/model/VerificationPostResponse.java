@@ -33,28 +33,9 @@ import javax.xml.bind.annotation.*;
 
 public class VerificationPostResponse  {
   
-    private String username;
     private String identityVerificationProvider;
     private List<VerificationClaimResponse> claims = null;
 
-
-    /**
-    **/
-    public VerificationPostResponse username(String username) {
-
-        this.username = username;
-        return this;
-    }
-    
-    @ApiModelProperty(example = "username", value = "")
-    @JsonProperty("username")
-    @Valid
-    public String getUsername() {
-        return username;
-    }
-    public void setUsername(String username) {
-        this.username = username;
-    }
 
     /**
     **/
@@ -112,14 +93,13 @@ public class VerificationPostResponse  {
             return false;
         }
         VerificationPostResponse verificationPostResponse = (VerificationPostResponse) o;
-        return Objects.equals(this.username, verificationPostResponse.username) &&
-            Objects.equals(this.identityVerificationProvider, verificationPostResponse.identityVerificationProvider) &&
+        return Objects.equals(this.identityVerificationProvider, verificationPostResponse.identityVerificationProvider) &&
             Objects.equals(this.claims, verificationPostResponse.claims);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(username, identityVerificationProvider, claims);
+        return Objects.hash(identityVerificationProvider, claims);
     }
 
     @Override
@@ -128,7 +108,6 @@ public class VerificationPostResponse  {
         StringBuilder sb = new StringBuilder();
         sb.append("class VerificationPostResponse {\n");
         
-        sb.append("    username: ").append(toIndentedString(username)).append("\n");
         sb.append("    identityVerificationProvider: ").append(toIndentedString(identityVerificationProvider)).append("\n");
         sb.append("    claims: ").append(toIndentedString(claims)).append("\n");
         sb.append("}");

@@ -26,7 +26,7 @@ import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.IdVProv
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.IdVProviderRequest;
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.IdVProviderResponse;
 import org.wso2.carbon.extension.identity.verification.api.rest.v1.model.VerificationClaim;
-import org.wso2.carbon.extension.identity.verification.provider.IdVProviderMgtException;
+import org.wso2.carbon.extension.identity.verification.provider.exception.IdVProviderMgtException;
 import org.wso2.carbon.extension.identity.verification.provider.model.IdVConfigProperty;
 import org.wso2.carbon.extension.identity.verification.provider.model.IdentityVerificationProvider;
 
