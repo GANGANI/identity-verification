@@ -23,6 +23,7 @@ package org.wso2.carbon.extension.identity.verification.provider.util;
 public class IdVProviderMgtConstants {
 
     public static final String IDVP_ERROR_PREFIX = "IDVP-";
+    public static final String IDVP_SECRET_TYPE_IDP_SECRETS = "IDVP_SECRET_PROPERTIES";
 
     /**
      * This class contains the constants used in the IdentityVerificationProvider.
@@ -34,7 +35,7 @@ public class IdVProviderMgtConstants {
         public static final String IS_IDVP_EXIST_SQL = "SELECT ID FROM IDVP WHERE UUID=? AND TENANT_ID=?";
         public static final String GET_IDVP_BY_NAME_SQL = "SELECT ID, UUID, NAME, DESCRIPTION, " +
                 "IS_ENABLED FROM IDVP WHERE NAME=? AND TENANT_ID=?";
-        public static final String GET_IDVP_CONFIG_SQL = "SELECT PROPERTY_KEY, PROPERTY_VALUE FROM " +
+        public static final String GET_IDVP_CONFIG_SQL = "SELECT PROPERTY_KEY, PROPERTY_VALUE, IS_SECRET FROM " +
                 "IDVP_CONFIG WHERE IDVP_ID=? AND TENANT_ID=?";
         public static final String GET_IDVP_CLAIMS_SQL = "SELECT CLAIM, LOCAL_CLAIM FROM " +
                 "IDVP_CLAIM_MAPPING WHERE IDVP_ID=? AND TENANT_ID=?";
@@ -47,7 +48,7 @@ public class IdVProviderMgtConstants {
                 "DESCRIPTION, IS_ENABLED) VALUES (?, ?, ?, ?, ?)";
 
         public static final String ADD_IDVP_CONFIG_SQL = "INSERT INTO IDVP_CONFIG " +
-                "(IDVP_ID, TENANT_ID, PROPERTY_KEY, PROPERTY_VALUE) VALUES (?, ?, ?, ?)";
+                "(IDVP_ID, TENANT_ID, PROPERTY_KEY, PROPERTY_VALUE, IS_SECRET) VALUES (?, ?, ?, ?, ?)";
 
         public static final String ADD_IDVP_CLAIM_SQL = "INSERT INTO IDVP_CLAIM_MAPPING " +
                 "(IDVP_ID, TENANT_ID, CLAIM, LOCAL_CLAIM) VALUES (?, ?, ?, ?)";

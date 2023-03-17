@@ -24,6 +24,7 @@ public class IdVConfigProperty {
 
     private String name;
     private String value;
+    private boolean isConfidential;
 
     public String getValue() {
 
@@ -43,5 +44,15 @@ public class IdVConfigProperty {
     public void setName(String name) {
 
         this.name = name;
+    }
+
+    public boolean isConfidential() {
+
+        return isConfidential;
+    }
+
+    public void setConfidential(boolean confidential) {
+
+        isConfidential = confidential;
     }
 }

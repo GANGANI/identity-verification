@@ -21,6 +21,7 @@ import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.wso2.carbon.extension.identity.verification.provider.IdVPSecretProcessor;
 import org.wso2.carbon.extension.identity.verification.provider.exception.IdVProviderMgtException;
 import org.wso2.carbon.extension.identity.verification.provider.exception.IdvProviderMgtServerException;
 import org.wso2.carbon.extension.identity.verification.provider.model.IdVConfigProperty;
@@ -29,6 +30,7 @@ import org.wso2.carbon.extension.identity.verification.provider.util.IdVProvider
 import org.wso2.carbon.extension.identity.verification.provider.util.IdVProviderMgtExceptionManagement;
 import org.wso2.carbon.identity.base.IdentityRuntimeException;
 import org.wso2.carbon.identity.core.util.IdentityDatabaseUtil;
+import org.wso2.carbon.identity.secret.mgt.core.exception.SecretManagementException;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -359,6 +361,14 @@ public class IdVProviderManagementDAO {
         if (identityVerificationProvider.getIdVConfigProperties() == null) {
             identityVerificationProvider.setIdVConfigProperties(new IdVConfigProperty[0]);
         }
+
+        IdVPSecretProcessor idVPSecretProcessor = new IdVPSecretProcessor();
+        try {
+            idVPSecretProcessor.encryptAssociatedSecrets(identityVerificationProvider);
+        } catch (SecretManagementException e) {
+            throw new RuntimeException(e);
+        }
+
         try (PreparedStatement addIDVProviderConfigsStmt = connection
                 .prepareStatement(IdVProviderMgtConstants.SQLQueries.ADD_IDVP_CONFIG_SQL)) {
             for (IdVConfigProperty idVConfigProperty : identityVerificationProvider.getIdVConfigProperties()) {
@@ -434,6 +444,12 @@ public class IdVProviderManagementDAO {
                                            Connection connection)
             throws IdvProviderMgtServerException {
 
+        try {
+            IdVPSecretProcessor secretProcessor = new IdVPSecretProcessor();
+            identityVerificationProvider = secretProcessor.decryptAssociatedSecrets(identityVerificationProvider);
+        } catch (SecretManagementException e) {
+            throw new RuntimeException(e);
+        }
         IdVConfigProperty[] idVConfigProperties = new IdVConfigProperty[0];
         List<IdVConfigProperty> idVConfigPropertyList = new ArrayList<>();
         try (PreparedStatement getIdVProvidersStmt = connection
@@ -446,6 +462,7 @@ public class IdVProviderManagementDAO {
                     IdVConfigProperty idVConfigProperty = new IdVConfigProperty();
                     idVConfigProperty.setName(idVProviderResultSet.getString("PROPERTY_KEY"));
                     idVConfigProperty.setValue(idVProviderResultSet.getString("PROPERTY_VALUE"));
+                    idVConfigProperty.setConfidential(idVProviderResultSet.getBoolean("IS_SECRET"));
                     idVConfigPropertyList.add(idVConfigProperty);
                 }
                 identityVerificationProvider.setIdVConfigProperties(idVConfigPropertyList.toArray(idVConfigProperties));

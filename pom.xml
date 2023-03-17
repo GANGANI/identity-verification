@@ -138,25 +138,29 @@
                 <version>${org.eclipse.osgi.version}</version>
             </dependency>
             <dependency>
-                <groupId>commons-logging</groupId>
-                <artifactId>commons-logging</artifactId>
-                <version>1.2</version>
-            </dependency>
-            <dependency>
                 <groupId>org.osgi</groupId>
                 <artifactId>org.osgi.core</artifactId>
-                <version>7.0.0</version>
+                <version>${org.osgi.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.json</groupId>
                 <artifactId>json</artifactId>
-                <version>20210307</version>
+                <version>${org.json.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.wso2.carbon.extension.identity.verification</groupId>
                 <artifactId>org.wso2.carbon.extension.identity.verifier</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
-                <scope>compile</scope>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.extension.identity.verification</groupId>
+                <artifactId>org.wso2.carbon.extension.identity.verification.claim.mgt</artifactId>
+                <version>${project.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.extension.identity.verification</groupId>
+                <artifactId>org.wso2.carbon.extension.identity.verification.provider</artifactId>
+                <version>${project.version}</version>
             </dependency>
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -192,6 +196,12 @@
             <dependency>
                 <groupId>org.wso2.carbon.identity.framework</groupId>
                 <artifactId>org.wso2.carbon.identity.application.common</artifactId>
+                <version>${carbon.identity.framework.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wso2.carbon.identity.framework</groupId>
+                <artifactId>org.wso2.carbon.identity.secret.mgt.core</artifactId>
                 <version>${carbon.identity.framework.version}</version>
                 <scope>provided</scope>
             </dependency>
@@ -267,7 +277,7 @@
         <javax.ws.rs.version>1.0</javax.ws.rs.version>
         <springframework.version>5.3.19</springframework.version>
         <slf4j.version>1.7.22</slf4j.version>
-        <carbon.identity.framework.version>5.20.34</carbon.identity.framework.version>
+        <carbon.identity.framework.version>5.25.134</carbon.identity.framework.version>
         <maven.compiler.source>14</maven.compiler.source>
         <maven.compiler.target>14</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -288,6 +298,8 @@
         <carbon.commons.imp.pkg.version>[4.7.2, 5.0.0)</carbon.commons.imp.pkg.version>
         <carbon.kernel.package.import.version.range>[4.6.0, 5.0.0)</carbon.kernel.package.import.version.range>
         <pax.logging.version>1.10.1</pax.logging.version>
+        <org.json.version>20210307</org.json.version>
+        <org.osgi.version>7.0.0</org.osgi.version>
     </properties>
 
 </project>
