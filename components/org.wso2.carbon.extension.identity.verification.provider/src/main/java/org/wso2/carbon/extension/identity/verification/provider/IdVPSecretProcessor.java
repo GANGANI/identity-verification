@@ -20,7 +20,6 @@ package org.wso2.carbon.extension.identity.verification.provider;
 
 import com.google.gson.Gson;
 import org.apache.commons.lang.StringUtils;
-import org.wso2.carbon.extension.identity.verification.provider.exception.IdVProviderMgtException;
 import org.wso2.carbon.extension.identity.verification.provider.model.IdVConfigProperty;
 import org.wso2.carbon.extension.identity.verification.provider.model.IdentityVerificationProvider;
 import org.wso2.carbon.identity.secret.mgt.core.SecretManagerImpl;
